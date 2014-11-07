@@ -50,7 +50,7 @@ var fling = window.fling || {};
                     console.info("1 namespace:", namespace);
                     var data = JSON.parse(messageData.data);
                     console.info("2 namespace:", namespace);
-                    ("onmessage" in self)&&self.onmessage(senderId, data);
+                    ("onMessage" in self)&&self.onMessage(senderId, data);
                 } else {
                     console.info("3 namespace:", namespace);
                 }
