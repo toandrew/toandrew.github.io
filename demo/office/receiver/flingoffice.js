@@ -24,9 +24,9 @@ var fling = window.fling || {};
 
     this.receiverDaemon = new ReceiverDaemon();
     this.receiverDaemon.on("opened", function(){
-         var wsAddress = "ws://"+ receiverDaemon.localIpAddress+":9439/channels/" + channelId;
+         var wsAddress = "ws://"+ self.receiverDaemon.localIpAddress+":9439/channels/" + channelId;
          console.info("-------------------------------------> player ws addr: ", wsAddress);
-         receiverDaemon.send({"type":"additionaldata","additionaldata":{ "serverId": wsAddress}});
+         self.receiverDaemon.send({"type":"additionaldata","additionaldata":{ "serverId": wsAddress}});
      });
 
      //start Receiver Daemon
