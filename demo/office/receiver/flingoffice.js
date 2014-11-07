@@ -30,7 +30,7 @@ var fling = window.fling || {};
      });
 
      //start Receiver Daemon
-     receiverDaemon.open();
+     this.receiverDaemon.open();
 
      /*
       * Create MessageChannel Obejct
