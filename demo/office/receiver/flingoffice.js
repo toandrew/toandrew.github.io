@@ -43,10 +43,11 @@ var fling = window.fling || {};
              case "senderDisconnected":
                 break;
              case "message":
-                var namespace = message.namespace;
+                var messageData = JSON.parse(message.data);
+                var namespace = messageData.namespace;
                 console.info("namespace:", namespace);
                 if (namespace == "urn:x-cast:com.infthink.cast.demo.office") {
-                    var data = JSON.parse(message.data);
+                    var data = JSON.parse(messageData.data);
                     ("onmessage" in self)&&self.onmessage(senderId, data);
                 }
                 break;
