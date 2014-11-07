@@ -47,8 +47,12 @@ var fling = window.fling || {};
                 var namespace = messageData.namespace;
                 console.info("namespace:", namespace);
                 if (namespace == "urn:x-cast:com.infthink.cast.demo.office") {
+                    console.info("1 namespace:", namespace);
                     var data = JSON.parse(messageData.data);
+                    console.info("2 namespace:", namespace);
                     ("onmessage" in self)&&self.onmessage(senderId, data);
+                } else {
+                    console.info("3 namespace:", namespace);
                 }
                 break;
          }
