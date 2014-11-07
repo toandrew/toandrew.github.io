@@ -37,6 +37,7 @@ var fling = window.fling || {};
       **/
     var channel = new MessageChannel(channelId);
     channel.on("message", function(senderId, messageType, message) {
+        console.info("channel message ", senderId, messageType, message);
         var messageData = JSON.parse(message);
         console.info("=================================channel message messageData: ", senderId, messageType, message, messageData);
 
