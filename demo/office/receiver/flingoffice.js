@@ -37,7 +37,7 @@ var fling = window.fling || {};
       **/
     var channel = new MessageChannel(channelId);
     channel.on("message", function(senderId, messageType, message) {
-        var messageData = JSON.parse(message.data);
+        var messageData = JSON.parse(message);
         console.info("=================================channel message messageData: ", senderId, messageType, message, messageData);
 
          switch (messageType) {
@@ -45,10 +45,12 @@ var fling = window.fling || {};
              case "senderDisconnected":
                 break;
              case "message":
+                var namespace = messageData.namespace;
+                var data = messageData.data;
+                ("onmessage" in self)&&self.onmessage(senderId, data);
                 break;
          }
 
-         ("onmessage" in self)&&self.onmessage(message);
     });
   }
 
@@ -85,11 +87,8 @@ var fling = window.fling || {};
      * choose function to call based on them.
      * @param {event} event the event to be processed.
      */
-    onMessage: function(event) {
-        console.log('********onMessage********' + event);
-        /*
-        var message = event.data;
-        var senderId = event.senderId;
+    onMessage: function(senderId, message) {
+        console.log('********onMessage:' + message + " senderId:" + senderId);
 
         if (message.command == 'show') {
             this.onShow(senderId, message);
@@ -100,7 +99,6 @@ var fling = window.fling || {};
         } else {
             console.log('Invalid message command: ' + message.command);
         }
-        */
     },
 
     onShow: function(senderId, message) {
