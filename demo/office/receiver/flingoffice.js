@@ -38,17 +38,17 @@ var fling = window.fling || {};
     var channel = new MessageChannel(channelId);
     channel.on("message", function(senderId, messageType, message) {
         console.info("channel message ", senderId, messageType, message);
-        var messageData = JSON.parse(JSON.stringify(message));
-        console.info("=================================channel message messageData: ", senderId, messageType, message, messageData);
-
          switch (messageType) {
              case "senderConnected":
              case "senderDisconnected":
                 break;
              case "message":
-                var namespace = messageData.namespace;
-                var data = messageData.data;
-                ("onmessage" in self)&&self.onmessage(senderId, data);
+                var namespace = message.namespace;
+                console.info("namespace:", namespace);
+                if (namespace == "urn:x-cast:com.infthink.cast.demo.office") {
+                    var data = JSON.parse(message.data);
+                    ("onmessage" in self)&&self.onmessage(senderId, data);
+                }
                 break;
          }
 
