@@ -22,20 +22,16 @@ var fling = window.fling || {};
 
     var channelId = guid();
 
-    this.receiverDaemon = new ReceiverDaemon();
-    this.receiverDaemon.on("opened", function(){
-         var wsAddress = "ws://"+ self.receiverDaemon.localIpAddress+":9439/channels/" + channelId;
-         console.info("-------------------------------------> player ws addr: ", wsAddress);
-         self.receiverDaemon.send({"type":"additionaldata","additionaldata":{ "serverId": wsAddress}});
-     });
+    this.receiverDaemon = new ReceiverDaemon("~browser");
 
-     //start Receiver Daemon
-     this.receiverDaemon.open();
+    var channel = this.receiverDaemon.createMessageChannel("ws");
+
+    //start Receiver Daemon
+    this.receiverDaemon.open();
 
      /*
       * Create MessageChannel Obejct
       **/
-    var channel = new MessageChannel(channelId);
     channel.on("message", function(senderId, messageType, message) {
         console.info("channel message ", senderId, messageType, message);
          switch (messageType) {
@@ -47,9 +43,7 @@ var fling = window.fling || {};
                 var namespace = messageData.namespace;
                 console.info("namespace:", namespace);
                 if (namespace == "urn:x-cast:com.infthink.cast.demo.office") {
-                    console.info("1 namespace:", namespace);
                     var data = JSON.parse(messageData.data);
-                    console.info("2 namespace:", namespace);
                     ("onMessage" in self)&&self.onMessage(senderId, data);
                 } else {
                     console.info("3 namespace:", namespace);
