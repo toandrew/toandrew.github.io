@@ -20,8 +20,6 @@ var fling = window.fling || {};
 
     console.log('********FlingOffice********');
 
-    var channelId = guid();
-
     this.receiverDaemon = new ReceiverManagerWrapper("~flingoffice");
 
     var channel = this.receiverDaemon.createMessageBus("urn:x-cast:com.infthink.cast.demo.office");
